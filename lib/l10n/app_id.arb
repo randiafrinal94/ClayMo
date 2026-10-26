@@ -1,0 +1,114 @@
+{
+  "@@locale": "id",
+  "appName": "Claymo",
+  "tagline": "Belajar membaca itu seru!",
+  "spelling": "Mengeja",
+  "spellingSubtitle": "Susun huruf jadi kata",
+  "phonics": "Huruf & Suku Kata",
+  "phonicsSubtitle": "Kenali bunyi huruf",
+  "quiz": "Tebak Gambar",
+  "quizSubtitle": "Pilih kata yang benar",
+  "listen": "Dengarkan",
+  "next": "Lanjut",
+  "wellDone": "Hebat!",
+  "tryAgain": "Ayo coba lagi!",
+  "back": "Kembali",
+  "alphabet": "Alfabet",
+  "syllables": "Suku Kata",
+  "phonicsWords": "Kata Fonik",
+  "spellingHint": "Ketuk huruf untuk menyusun kata",
+  "syllableHint": "Ketuk suku kata untuk mendengarnya",
+  "phonicsHint": "Ketuk kata untuk mendengar bunyinya",
+  "playRow": "Putar semua suku kata",
+  "quizPrompt": "Gambar apa ini?",
+  "questionProgress": "Soal {current} dari {total}",
+  "@questionProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "roundComplete": "Kamu hebat sekali!",
+  "roundScore": "{score} dari {total} benar",
+  "@roundScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playAgain": "Main lagi",
+  "backHome": "Ke beranda",
+  "switchGreeting": "Halo! Ayo belajar bahasa Indonesia!",
+  "languageLabel": "Bahasa",
+  "starsLabel": "Bintang",
+  "wordProgress": "Kata {current} dari {total}",
+  "@wordProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "loading": "Memuat",
+  "navHome": "Beranda",
+  "navSpell": "Eja",
+  "navLetters": "Huruf",
+  "navQuiz": "Tebak",
+  "navAlbum": "Album",
+  "heroTitle": "Halo, Teman Claymo!",
+  "heroSubtitle": "Ayo belajar membaca dan mengeja!",
+  "menuLetters": "Huruf",
+  "menuLettersSubtitle": "A–Z & suku kata",
+  "albumTitle": "Album Stiker",
+  "albumSubtitle": "Koleksiku",
+  "slow": "Pelan",
+  "listenQuestion": "Dengar Soal",
+  "playAll": "Baca Semua",
+  "syllableTouch": "Sentuh suku kata untuk mendengarnya",
+  "albumStars": "{count} ⭐ terkumpul",
+  "@albumStars": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "albumNext": "{count} ⭐ lagi untuk stiker {emoji} {name}",
+  "@albumNext": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "emoji": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "albumDone": "Wow! Semua stiker terkumpul! 🎉",
+  "stickerUnlocked": "Stiker baru! {emoji} {name}",
+  "@stickerUnlocked": {
+    "placeholders": {
+      "emoji": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "quizThinking": "Gambar apa ini? 🤔"
+}

@@ -1,0 +1,84 @@
+{
+  "@@locale": "en",
+  "appName": "Claymo",
+  "tagline": "Learning to read is fun!",
+  "spelling": "Spelling",
+  "spellingSubtitle": "Build words with letters",
+  "phonics": "Letters & Phonics",
+  "phonicsSubtitle": "Learn letter sounds",
+  "quiz": "Picture Quiz",
+  "quizSubtitle": "Pick the right word",
+  "listen": "Listen",
+  "next": "Next",
+  "wellDone": "Great job!",
+  "tryAgain": "Let's try again!",
+  "back": "Back",
+  "alphabet": "Alphabet",
+  "syllables": "Syllables",
+  "phonicsWords": "Phonics Words",
+  "spellingHint": "Tap the letters to spell the word",
+  "syllableHint": "Tap a syllable to hear it",
+  "phonicsHint": "Tap a word to hear it sounded out",
+  "playRow": "Play all syllables",
+  "quizPrompt": "What is this?",
+  "questionProgress": "Question {current} of {total}",
+  "roundComplete": "You did amazing!",
+  "roundScore": "{score} of {total} correct",
+  "playAgain": "Play again",
+  "backHome": "Back home",
+  "switchGreeting": "Hello! Let's learn English!",
+  "languageLabel": "Language",
+  "starsLabel": "Stars",
+  "wordProgress": "Word {current} of {total}",
+  "loading": "Loading",
+  "navHome": "Home",
+  "navSpell": "Spell",
+  "navLetters": "Letters",
+  "navQuiz": "Guess",
+  "navAlbum": "Album",
+  "heroTitle": "Hello, Claymo Friend!",
+  "heroSubtitle": "Let's learn to read and spell!",
+  "menuLetters": "Letters",
+  "menuLettersSubtitle": "A–Z & phonics",
+  "albumTitle": "Sticker Album",
+  "albumSubtitle": "My collection",
+  "slow": "Slow",
+  "listenQuestion": "Hear Question",
+  "playAll": "Read All",
+  "syllableTouch": "Touch a word to hear it",
+  "albumStars": "{count} ⭐ collected",
+  "@albumStars": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "albumNext": "{count} ⭐ more for the {emoji} {name} sticker",
+  "@albumNext": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "emoji": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "albumDone": "Wow! All stickers collected! 🎉",
+  "stickerUnlocked": "New sticker! {emoji} {name}",
+  "@stickerUnlocked": {
+    "placeholders": {
+      "emoji": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "quizThinking": "What is this? 🤔"
+}

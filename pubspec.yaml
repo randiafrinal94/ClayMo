@@ -1,0 +1,45 @@
+name: claymo
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+2
+
+environment:
+  sdk: ^3.13.4
+
+dependencies:
+  audioplayers: ^6.8.1
+  confetti: ^0.8.0
+  flutter:
+    sdk: flutter
+  flutter_animate: ^4.5.2
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^3.4.3
+  flutter_tts: ^4.2.5
+  intl: ^0.20.3
+  path: ^1.9.1
+  shared_preferences: ^2.5.6
+  sqflite: ^2.4.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  sqflite_common_ffi: ^2.4.5
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/sounds/
+  fonts:
+    - family: Fredoka
+      fonts:
+        - asset: assets/fonts/Fredoka.ttf
+          weight: 400
+        - asset: assets/fonts/Fredoka.ttf
+          weight: 500
+        - asset: assets/fonts/Fredoka.ttf
+          weight: 600
+        - asset: assets/fonts/Fredoka.ttf
+          weight: 700
