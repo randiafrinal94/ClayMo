@@ -33,10 +33,14 @@ class HomeScreen extends ConsumerWidget {
               width: double.infinity,
               child: Column(
                 children: [
-                  const Text('🦉', style: TextStyle(fontSize: 64))
-                      .animate(onPlay: (c) => c.repeat(reverse: true))
-                      .rotate(begin: -0.0, end: -0.022, duration: 1250.ms, curve: Curves.easeInOut)
-                      .moveY(begin: 0, end: -6, duration: 1250.ms, curve: Curves.easeInOut),
+                  // Animasi tak berujung dikurung di boundary sendiri supaya kartu
+                  // di sekitarnya tidak ikut digambar ulang tiap frame.
+                  RepaintBoundary(
+                    child: const Text('🦉', style: TextStyle(fontSize: 64))
+                        .animate(onPlay: (c) => c.repeat(reverse: true))
+                        .rotate(begin: -0.0, end: -0.022, duration: 1250.ms, curve: Curves.easeInOut)
+                        .moveY(begin: 0, end: -6, duration: 1250.ms, curve: Curves.easeInOut),
+                  ),
                   const SizedBox(height: 4),
                   Text(
                     l.heroTitle,

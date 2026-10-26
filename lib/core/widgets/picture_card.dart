@@ -20,25 +20,27 @@ class PictureCard extends StatelessWidget {
           child: FittedBox(
             child: Padding(
               padding: const EdgeInsets.all(8),
-              child:
-                  Text(
-                        emoji,
-                        style: TextStyle(
-                          fontSize: 104,
-                          shadows: [
-                            Shadow(
-                              color: const Color(0xFF463C78).withValues(alpha: 0.22),
-                              offset: const Offset(4, 7),
-                              blurRadius: 5,
-                            ),
-                          ],
-                        ),
-                      )
-                      .animate(key: ValueKey(emoji))
-                      .scale(begin: const Offset(0.4, 0.4), duration: 600.ms, curve: Curves.elasticOut)
-                      .then()
-                      .animate(onPlay: (c) => c.repeat(reverse: true))
-                      .rotate(begin: 0, end: -0.022, duration: 1500.ms, curve: Curves.easeInOut),
+              child: RepaintBoundary(
+                child:
+                    Text(
+                          emoji,
+                          style: TextStyle(
+                            fontSize: 104,
+                            shadows: [
+                              Shadow(
+                                color: const Color(0xFF463C78).withValues(alpha: 0.22),
+                                offset: const Offset(4, 7),
+                                blurRadius: 5,
+                              ),
+                            ],
+                          ),
+                        )
+                        .animate(key: ValueKey(emoji))
+                        .scale(begin: const Offset(0.4, 0.4), duration: 600.ms, curve: Curves.elasticOut)
+                        .then()
+                        .animate(onPlay: (c) => c.repeat(reverse: true))
+                        .rotate(begin: 0, end: -0.022, duration: 1500.ms, curve: Curves.easeInOut),
+              ),
             ),
           ),
         ),

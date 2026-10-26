@@ -50,18 +50,16 @@ class AppShell extends ConsumerWidget {
           children: [
             const _TopBar(),
             Expanded(
-              child: KeyedSubtree(
-                key: ValueKey(tab),
-                child: _screenFor(tab)
-                    .animate()
-                    .fadeIn(duration: 220.ms)
-                    .slideY(begin: 0.04, end: 0, duration: 450.ms, curve: clayBounce)
-                    .scale(
-                      begin: const Offset(0.96, 0.96),
-                      end: const Offset(1, 1),
-                      duration: 450.ms,
-                      curve: clayBounce,
-                    ),
+              // Transisi ringan (fade + geser saja, tanpa scale) di dalam RepaintBoundary
+              // agar isi layar tidak dirasterisasi ulang tiap frame.
+              child: RepaintBoundary(
+                child: KeyedSubtree(
+                  key: ValueKey(tab),
+                  child: _screenFor(tab)
+                      .animate()
+                      .fadeIn(duration: 200.ms)
+                      .slideY(begin: 0.03, end: 0, duration: 260.ms, curve: Curves.easeOutCubic),
+                ),
               ),
             ),
             const _NavBar(),

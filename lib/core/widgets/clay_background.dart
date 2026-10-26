@@ -1,4 +1,6 @@
 import 'dart:math' as math;
+import 'dart:typed_data';
+import 'dart:ui' show PointMode;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -53,27 +55,29 @@ class _FramedPhone extends StatelessWidget {
     return Stack(
       children: [
         const Positioned.fill(child: _PolkaBackground()),
-        const _Decorations(),
+        const RepaintBoundary(child: _Decorations()),
         Center(
-          child: Container(
-            width: _frameWidth,
-            height: height,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(radius),
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(color: Color(0x595A3C8C), offset: Offset(0, 30), blurRadius: 60),
-                BoxShadow(color: Color(0xFFE7D6FF), offset: Offset(0, 8)),
-              ],
-            ),
-            padding: const EdgeInsets.all(_frameBorder),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(radius - _frameBorder),
-              child: DecoratedBox(
-                decoration: const BoxDecoration(gradient: ClayColors.pageGradient),
-                child: MediaQuery(
-                  data: mq.copyWith(size: inner, padding: EdgeInsets.zero, viewPadding: EdgeInsets.zero),
-                  child: child,
+          child: RepaintBoundary(
+            child: Container(
+              width: _frameWidth,
+              height: height,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(radius),
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(color: Color(0x595A3C8C), offset: Offset(0, 30), blurRadius: 60),
+                  BoxShadow(color: Color(0xFFE7D6FF), offset: Offset(0, 8)),
+                ],
+              ),
+              padding: const EdgeInsets.all(_frameBorder),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(radius - _frameBorder),
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(gradient: ClayColors.pageGradient),
+                  child: MediaQuery(
+                    data: mq.copyWith(size: inner, padding: EdgeInsets.zero, viewPadding: EdgeInsets.zero),
+                    child: child,
+                  ),
                 ),
               ),
             ),
@@ -114,28 +118,54 @@ class _PolkaPainter extends CustomPainter {
   final Animation<double> animation;
 
   static const _tile = 90.0;
-  static final _dots = [
-    (const Offset(20, 20), 8.5, const Color(0xA6FFFFFF)),
-    (const Offset(70, 70), 11.5, const Color(0xB3A8D8FF)),
-    (const Offset(20, 70), 6.5, const Color(0xCCFFE9A0)),
-    (const Offset(70, 20), 7.5, const Color(0xCCB5ECD2)),
+  static const _dots = [
+    (Offset(20, 20), 8.5, Color(0xA6FFFFFF)),
+    (Offset(70, 70), 11.5, Color(0xB3A8D8FF)),
+    (Offset(20, 70), 6.5, Color(0xCCFFE9A0)),
+    (Offset(70, 20), 7.5, Color(0xCCB5ECD2)),
   ];
+
+  static final _background = Paint()..color = const Color(0xFFFFD9E8);
+
+  // Titik tiap jenis disusun sekali per ukuran; frame berikutnya hanya
+  // menggeser kanvas, lalu menggambar satu batch per jenis (4 draw call,
+  // bukan ribuan drawCircle).
+  Size? _cachedSize;
+  List<Float32List> _points = const [];
+  List<Paint> _paints = const [];
+
+  void _rebuild(Size size) {
+    _cachedSize = size;
+    final cols = (size.width / _tile).ceil() + 2;
+    final rows = (size.height / _tile).ceil() + 2;
+    _points = [
+      for (final (center, _, _) in _dots)
+        Float32List.fromList([
+          for (var r = 0; r < rows; r++)
+            for (var c = 0; c < cols; c++) ...[c * _tile + center.dx, r * _tile + center.dy],
+        ]),
+    ];
+    _paints = [
+      for (final (_, radius, color) in _dots)
+        Paint()
+          ..color = color
+          ..strokeCap = StrokeCap.round
+          ..strokeWidth = radius * 2,
+    ];
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawRect(Offset.zero & size, Paint()..color = const Color(0xFFFFD9E8));
+    canvas.drawRect(Offset.zero & size, _background);
+    if (_cachedSize != size) _rebuild(size);
     // 360px = 4 petak, sehingga loop bergeser mulus.
-    final shift = animation.value * 360;
-    final startX = -_tile + (shift % _tile);
-    final startY = -_tile + (shift % _tile);
-    final paint = Paint();
-    for (var y = startY; y < size.height; y += _tile) {
-      for (var x = startX; x < size.width; x += _tile) {
-        for (final (center, radius, color) in _dots) {
-          canvas.drawCircle(Offset(x, y) + center, radius, paint..color = color);
-        }
-      }
+    final shift = (animation.value * 360) % _tile;
+    canvas.save();
+    canvas.translate(-_tile + shift, -_tile + shift);
+    for (var i = 0; i < _dots.length; i++) {
+      canvas.drawRawPoints(PointMode.points, _points[i], _paints[i]);
     }
+    canvas.restore();
   }
 
   @override
