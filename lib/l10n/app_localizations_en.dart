@@ -173,4 +173,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quizThinking => 'What is this? 🤔';
+
+  @override
+  String get voiceSetupTitle => 'Indonesian voice not installed';
+
+  @override
+  String get voiceSetupBody =>
+      'For parents: so Claymo pronounces letters and syllables correctly, download the Indonesian voice in Speech Services by Google.';
+
+  @override
+  String get voiceSetupBodyIos =>
+      'For parents: open Settings › Accessibility › Spoken Content › Voices, then download an Indonesian voice.';
+
+  @override
+  String get voiceSetupOpen => 'Open Settings';
+
+  @override
+  String get voiceSetupLater => 'Maybe later';
+
+  @override
+  String get voiceSetupOk => 'Got it';
 }

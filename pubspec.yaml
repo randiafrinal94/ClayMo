@@ -32,6 +32,9 @@ flutter:
   generate: true
   assets:
     - assets/sounds/
+    # Klip suara manusia (opsional): letters/b.mp3, syllables/ba.mp3, ...
+    - assets/audio/phonics/letters/
+    - assets/audio/phonics/syllables/
   fonts:
     - family: Fredoka
       fonts:

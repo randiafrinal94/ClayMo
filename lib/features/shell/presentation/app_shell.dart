@@ -12,6 +12,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../album/presentation/album_screen.dart';
 import '../../home/presentation/home_screen.dart';
 import '../../language/presentation/language_switcher.dart';
+import '../../language/presentation/voice_setup_guard.dart';
 import '../../phonics/presentation/phonics_screen.dart';
 import '../../language/application/language_provider.dart';
 import '../../language/domain/app_language.dart';
@@ -45,25 +46,27 @@ class AppShell extends ConsumerWidget {
     });
 
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            const _TopBar(),
-            Expanded(
-              // Transisi ringan (fade + geser saja, tanpa scale) di dalam RepaintBoundary
-              // agar isi layar tidak dirasterisasi ulang tiap frame.
-              child: RepaintBoundary(
-                child: KeyedSubtree(
-                  key: ValueKey(tab),
-                  child: _screenFor(tab)
-                      .animate()
-                      .fadeIn(duration: 200.ms)
-                      .slideY(begin: 0.03, end: 0, duration: 260.ms, curve: Curves.easeOutCubic),
+      body: VoiceSetupGuard(
+        child: SafeArea(
+          child: Column(
+            children: [
+              const _TopBar(),
+              Expanded(
+                // Transisi ringan (fade + geser saja, tanpa scale) di dalam RepaintBoundary
+                // agar isi layar tidak dirasterisasi ulang tiap frame.
+                child: RepaintBoundary(
+                  child: KeyedSubtree(
+                    key: ValueKey(tab),
+                    child: _screenFor(tab)
+                        .animate()
+                        .fadeIn(duration: 200.ms)
+                        .slideY(begin: 0.03, end: 0, duration: 260.ms, curve: Curves.easeOutCubic),
+                  ),
                 ),
               ),
-            ),
-            const _NavBar(),
-          ],
+              const _NavBar(),
+            ],
+          ),
         ),
       ),
     );

@@ -173,4 +173,24 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get quizThinking => 'Gambar apa ini? 🤔';
+
+  @override
+  String get voiceSetupTitle => 'Suara Bahasa Indonesia belum terpasang';
+
+  @override
+  String get voiceSetupBody =>
+      'Untuk orang tua: agar Claymo melafalkan huruf dan suku kata dengan benar, unduh suara Bahasa Indonesia di Layanan Ucapan Google (Speech Services by Google).';
+
+  @override
+  String get voiceSetupBodyIos =>
+      'Untuk orang tua: buka Pengaturan › Aksesibilitas › Konten Lisan › Suara, lalu unduh suara Bahasa Indonesia.';
+
+  @override
+  String get voiceSetupOpen => 'Buka Pengaturan';
+
+  @override
+  String get voiceSetupLater => 'Nanti saja';
+
+  @override
+  String get voiceSetupOk => 'Mengerti';
 }

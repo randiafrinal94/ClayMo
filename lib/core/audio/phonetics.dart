@@ -1,68 +1,69 @@
 /// Normalisasi fonetik agar mesin TTS melafalkan huruf/suku kata dengan benar.
 ///
-/// Bahasa Indonesia: huruf/suku kata berakhiran "e" (Be, De, Fe, Ce, ...)
-/// dilafalkan e-taling (/e/) sesuai KBBI. Mesin TTS cenderung membacanya sebagai
-/// pepet /ə/ atau menambahkan desah "h" di akhir, jadi vokalnya dipanjangkan
-/// menjadi "ee" dan diberi spasi penutup: `Be` -> `"bee "`.
+/// Mesin TTS cenderung membaca huruf/suku kata pendek dengan model fonetik
+/// Inggris ("I" -> "ai", "G" -> "ji"), memotong suku kata terbuka dengan
+/// letupan/desah "h", dan menukar e-pepet /ə/ dengan e-taling /e/. Karena itu:
+/// - huruf tunggal tidak pernah dikirim mentah, melainkan ejaan Indonesianya;
+/// - setiap suku kata diberi koma lembut (`ba,`) agar intonasi turun datar
+///   dan vokal "mendarat" tanpa hentian glotal;
+/// - vokal "e" digandakan (`bee,`) agar terbaca e-taling seperti pada "sate";
+/// - vokal "i" setelah konsonan digandakan (`hii,`) agar "Hi" bukan "Hai".
 abstract final class IndonesianPhonetics {
   /// Nama huruf alfabet Indonesia (A–Z) dalam bentuk yang aman untuk TTS.
-  ///
-  /// Huruf tunggal tidak pernah dikirim mentah ("B", "H") karena TTS Android
-  /// sering membacanya sebagai huruf/singkatan Inggris.
   static const Map<String, String> letterNames = {
-    'a': 'a ',
-    'b': 'bee ',
-    'c': 'cee ',
-    'd': 'dee ',
-    'e': 'e ',
-    'f': 'ef ',
-    'g': 'gee ',
-    'h': 'haa ',
-    'i': 'i ',
-    'j': 'jee ',
-    'k': 'kaa ',
-    'l': 'el ',
-    'm': 'em ',
-    'n': 'en ',
-    'o': 'o ',
-    'p': 'pee ',
-    'q': 'qii ',
-    'r': 'er ',
-    's': 'es ',
-    't': 'tee ',
-    'u': 'u ',
-    'v': 'vee ',
-    'w': 'wee ',
-    'x': 'eks ',
-    'y': 'yee ',
-    'z': 'zet ',
+    'a': 'a,',
+    'b': 'bee,',
+    'c': 'cee,',
+    'd': 'dee,',
+    'e': 'ee,',
+    'f': 'ef,',
+    'g': 'gee,',
+    'h': 'haa,',
+    'i': 'i,',
+    'j': 'jee,',
+    'k': 'kaa,',
+    'l': 'el,',
+    'm': 'em,',
+    'n': 'en,',
+    'o': 'o,',
+    'p': 'pee,',
+    'q': 'qii,',
+    'r': 'err,',
+    's': 'es,',
+    't': 'tee,',
+    'u': 'u,',
+    'v': 'fee,',
+    'w': 'wee,',
+    'x': 'eks,',
+    'y': 'yee,',
+    'z': 'zet,',
   };
 
-  // Token utuh berupa 0–2 konsonan + "e": e, be, ce, nge, nye, ...
-  static final RegExp _talingToken = RegExp(
-    r'(?<![A-Za-z])([bcdfghjklmnpqrstvwxyz]{0,2})e(?![A-Za-z])',
+  // Token suku kata terbuka utuh: 0–2 konsonan + 1 vokal (a, ba, nga, nye, ...),
+  // termasuk koma yang mungkin sudah ada agar tidak tergandakan.
+  static final RegExp _openSyllable = RegExp(
+    r'(?<![A-Za-z])([bcdfghjklmnpqrstvwxyz]{0,2})([aiueo]),?(?![A-Za-z])',
     caseSensitive: false,
   );
 
-  // Token utuh berupa 1–2 konsonan + "i": hi, bi, pi, ngi, nyi, ...
-  // (vokal "i" lepas tidak disentuh; itu nama huruf, bukan suku kata.)
-  static final RegExp _iToken = RegExp(r'(?<![A-Za-z])([bcdfghjklmnpqrstvwxyz]{1,2})i(?![A-Za-z])', caseSensitive: false);
-
-  /// Nama huruf (mis. `B` -> `"bee "`).
+  /// Nama huruf (mis. `B` -> `"bee,"`).
   static String letter(String letter) {
     final key = letter.trim().toLowerCase();
     return letterNames[key] ?? key;
   }
 
   /// Normalisasi teks yang berisi huruf/suku kata lepas
-  /// (`"Ba Bi Bu Be Bo"` -> `"ba bii  bu bee  bo"`).
-  /// - "e" → "ee " agar terbaca e-taling tanpa desah "h".
-  /// - "i" → "ii " agar "Hi" tidak terbaca sapaan Inggris "Hai".
+  /// (`"Ba Bi Bu Be Bo"` -> `"ba, bii, bu, bee, bo,"`).
   /// Kata utuh seperti "kucing" atau "meja" tidak disentuh.
-  static String syllables(String text) => text
-      .toLowerCase()
-      .replaceAllMapped(_talingToken, (m) => '${m[1]}ee ')
-      .replaceAllMapped(_iToken, (m) => '${m[1]}ii ');
+  static String syllables(String text) => text.toLowerCase().replaceAllMapped(_openSyllable, (m) {
+    final consonants = m[1]!;
+    final vowel = switch (m[2]!) {
+      'e' => 'ee',
+      'i' when consonants.isNotEmpty => 'ii',
+      final v => v,
+    };
+    return '$consonants$vowel,';
+  });
 }
 
 /// Bunyi fonik Inggris (bukan nama huruf) untuk membantu blending.

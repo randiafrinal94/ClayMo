@@ -110,5 +110,11 @@
       }
     }
   },
-  "quizThinking": "Gambar apa ini? 🤔"
+  "quizThinking": "Gambar apa ini? 🤔",
+  "voiceSetupTitle": "Suara Bahasa Indonesia belum terpasang",
+  "voiceSetupBody": "Untuk orang tua: agar Claymo melafalkan huruf dan suku kata dengan benar, unduh suara Bahasa Indonesia di Layanan Ucapan Google (Speech Services by Google).",
+  "voiceSetupBodyIos": "Untuk orang tua: buka Pengaturan › Aksesibilitas › Konten Lisan › Suara, lalu unduh suara Bahasa Indonesia.",
+  "voiceSetupOpen": "Buka Pengaturan",
+  "voiceSetupLater": "Nanti saja",
+  "voiceSetupOk": "Mengerti"
 }

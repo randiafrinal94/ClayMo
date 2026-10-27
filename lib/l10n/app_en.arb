@@ -80,5 +80,11 @@
       }
     }
   },
-  "quizThinking": "What is this? 🤔"
+  "quizThinking": "What is this? 🤔",
+  "voiceSetupTitle": "Indonesian voice not installed",
+  "voiceSetupBody": "For parents: so Claymo pronounces letters and syllables correctly, download the Indonesian voice in Speech Services by Google.",
+  "voiceSetupBodyIos": "For parents: open Settings › Accessibility › Spoken Content › Voices, then download an Indonesian voice.",
+  "voiceSetupOpen": "Open Settings",
+  "voiceSetupLater": "Maybe later",
+  "voiceSetupOk": "Got it"
 }

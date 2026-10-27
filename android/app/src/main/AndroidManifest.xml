@@ -45,5 +45,7 @@
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE"/>
         </intent>
+        <!-- Android 11+: cek apakah Google TTS terpasang (dialog unduh voice Indonesia). -->
+        <package android:name="com.google.android.tts"/>
     </queries>
 </manifest>

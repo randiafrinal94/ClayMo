@@ -403,6 +403,42 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Gambar apa ini? 🤔'**
   String get quizThinking;
+
+  /// No description provided for @voiceSetupTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Suara Bahasa Indonesia belum terpasang'**
+  String get voiceSetupTitle;
+
+  /// No description provided for @voiceSetupBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Untuk orang tua: agar Claymo melafalkan huruf dan suku kata dengan benar, unduh suara Bahasa Indonesia di Layanan Ucapan Google (Speech Services by Google).'**
+  String get voiceSetupBody;
+
+  /// No description provided for @voiceSetupBodyIos.
+  ///
+  /// In id, this message translates to:
+  /// **'Untuk orang tua: buka Pengaturan › Aksesibilitas › Konten Lisan › Suara, lalu unduh suara Bahasa Indonesia.'**
+  String get voiceSetupBodyIos;
+
+  /// No description provided for @voiceSetupOpen.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka Pengaturan'**
+  String get voiceSetupOpen;
+
+  /// No description provided for @voiceSetupLater.
+  ///
+  /// In id, this message translates to:
+  /// **'Nanti saja'**
+  String get voiceSetupLater;
+
+  /// No description provided for @voiceSetupOk.
+  ///
+  /// In id, this message translates to:
+  /// **'Mengerti'**
+  String get voiceSetupOk;
 }
 
 class _AppLocalizationsDelegate
