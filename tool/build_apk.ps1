@@ -5,6 +5,10 @@
 #   .\tool\build_apk.ps1 -SplitAbi      # APK per arsitektur (lebih kecil)
 #   .\tool\build_apk.ps1 -Clean         # flutter clean dulu
 #   .\tool\build_apk.ps1 -Install       # langsung install ke HP via adb (USB debugging)
+#   .\tool\build_apk.ps1 -NoBump        # build tanpa menaikkan versi pubspec.yaml
+#
+# Sebelum build, tool/version_bumper.dart menghitung versi SemVer dari Conventional Commits
+# sejak tag vX.Y.Z terakhir + build number dari jumlah commit, lalu menulisnya ke pubspec.yaml.
 #
 # Pertama kali dijalankan, script membuat keystore rilis (android/claymo-release.jks)
 # + android/key.properties. SIMPAN kedua file itu: APK versi berikutnya harus
@@ -14,7 +18,8 @@
 param(
     [switch]$SplitAbi,
     [switch]$Clean,
-    [switch]$Install
+    [switch]$Install,
+    [switch]$NoBump
 )
 
 $ErrorActionPreference = 'Stop'
@@ -71,6 +76,11 @@ if ($Clean) { Step 'flutter clean'; Run flutter @('clean') }
 
 Step 'flutter pub get'
 Run flutter @('pub', 'get')
+
+if (-not $NoBump) {
+    Step 'Bump versi (SemVer dari Conventional Commits)'
+    Run dart @('run', 'tool/version_bumper.dart')
+}
 
 Step 'flutter gen-l10n'
 Run flutter @('gen-l10n')

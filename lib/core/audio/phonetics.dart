@@ -6,33 +6,36 @@
 /// menjadi "ee" dan diberi spasi penutup: `Be` -> `"bee "`.
 abstract final class IndonesianPhonetics {
   /// Nama huruf alfabet Indonesia (A–Z) dalam bentuk yang aman untuk TTS.
+  ///
+  /// Huruf tunggal tidak pernah dikirim mentah ("B", "H") karena TTS Android
+  /// sering membacanya sebagai huruf/singkatan Inggris.
   static const Map<String, String> letterNames = {
-    'a': 'a',
+    'a': 'a ',
     'b': 'bee ',
     'c': 'cee ',
     'd': 'dee ',
-    'e': 'ee ',
+    'e': 'e ',
     'f': 'ef ',
     'g': 'gee ',
-    'h': 'ha',
-    'i': 'i',
+    'h': 'haa ',
+    'i': 'i ',
     'j': 'jee ',
-    'k': 'ka',
-    'l': 'el',
-    'm': 'em',
-    'n': 'en',
-    'o': 'o',
+    'k': 'kaa ',
+    'l': 'el ',
+    'm': 'em ',
+    'n': 'en ',
+    'o': 'o ',
     'p': 'pee ',
-    'q': 'ki',
-    'r': 'er',
-    's': 'es',
+    'q': 'qii ',
+    'r': 'er ',
+    's': 'es ',
     't': 'tee ',
-    'u': 'u',
-    'v': 'fee ',
+    'u': 'u ',
+    'v': 'vee ',
     'w': 'wee ',
-    'x': 'eks',
+    'x': 'eks ',
     'y': 'yee ',
-    'z': 'zet',
+    'z': 'zet ',
   };
 
   // Token utuh berupa 0–2 konsonan + "e": e, be, ce, nge, nye, ...
@@ -41,6 +44,10 @@ abstract final class IndonesianPhonetics {
     caseSensitive: false,
   );
 
+  // Token utuh berupa 1–2 konsonan + "i": hi, bi, pi, ngi, nyi, ...
+  // (vokal "i" lepas tidak disentuh; itu nama huruf, bukan suku kata.)
+  static final RegExp _iToken = RegExp(r'(?<![A-Za-z])([bcdfghjklmnpqrstvwxyz]{1,2})i(?![A-Za-z])', caseSensitive: false);
+
   /// Nama huruf (mis. `B` -> `"bee "`).
   static String letter(String letter) {
     final key = letter.trim().toLowerCase();
@@ -48,9 +55,14 @@ abstract final class IndonesianPhonetics {
   }
 
   /// Normalisasi teks yang berisi huruf/suku kata lepas
-  /// (`"Ba Bi Bu Be Bo"` -> `"ba bi bu bee  bo"`).
+  /// (`"Ba Bi Bu Be Bo"` -> `"ba bii  bu bee  bo"`).
+  /// - "e" → "ee " agar terbaca e-taling tanpa desah "h".
+  /// - "i" → "ii " agar "Hi" tidak terbaca sapaan Inggris "Hai".
   /// Kata utuh seperti "kucing" atau "meja" tidak disentuh.
-  static String syllables(String text) => text.toLowerCase().replaceAllMapped(_talingToken, (m) => '${m[1]}ee ');
+  static String syllables(String text) => text
+      .toLowerCase()
+      .replaceAllMapped(_talingToken, (m) => '${m[1]}ee ')
+      .replaceAllMapped(_iToken, (m) => '${m[1]}ii ');
 }
 
 /// Bunyi fonik Inggris (bukan nama huruf) untuk membantu blending.
